@@ -1,0 +1,159 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "**/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "eslint:recommended",
+        "plugin:import/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "prettier",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "array"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": 2,
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": {
+              "accessors": "explicit",
+              "constructors": "off",
+              "methods": "explicit",
+              "parameterProperties": "explicit",
+              "properties": "explicit"
+            }
+          }
+        ],
+        "class-methods-use-this": "off",
+        "import/prefer-default-export": "off",
+        "@typescript-eslint/lines-between-class-members": 0,
+        "@typescript-eslint/no-explicit-any": 2,
+        "@typescript-eslint/no-inferrable-types": 0,
+        "@typescript-eslint/no-non-null-assertion": 1,
+        "@typescript-eslint/no-unnecessary-type-assertion": 2,
+        "block-spacing": [
+          "warn",
+          "always"
+        ],
+        "curly": [
+          "warn",
+          "all"
+        ],
+        "eol-last": 2,
+        "max-len": [
+          "error",
+          {
+            "code": 120,
+            "ignoreComments": true,
+            "tabWidth": 2
+          }
+        ],
+        "max-lines-per-function": [
+          "error",
+          40
+        ],
+        "no-console": 0,
+        "no-debugger": 0,
+        "no-multiple-empty-lines": [
+          "error",
+          {
+            "max": 2,
+            "maxBOF": 0,
+            "maxEOF": 1
+          }
+        ],
+        "no-param-reassign": 1,
+        "no-plusplus": 0,
+        "no-return-assign": 1,
+        "no-template-curly-in-string": 1,
+        "no-underscore-dangle": 0,
+        "no-unused-vars": 0,
+        "object-curly-spacing": [
+          "warn",
+          "always"
+        ],
+        "spaced-comment": [
+          "error",
+          "always",
+          {
+            "markers": [
+              "!",
+              "?",
+              "//",
+              "todo",
+              "*"
+            ]
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "excludedFiles": [
+        "*inline-template-*.component.html"
+      ],
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "parser": "angular"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "rules": {
+        "@ngrx/avoid-combining-selectors": "off"
+      },
+      "extends": [
+        "plugin:@ngrx/all-requiring-type-checking"
+      ]
+    }
+  ]
+}

@@ -1,17 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "**/tsconfig.json"
-        ],
+        "project": ["**/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -21,9 +15,7 @@
         "plugin:import/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "prettier",
-        "plugin:prettier/recommended"
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "@typescript-eslint/array-type": [
@@ -53,14 +45,8 @@
         "@typescript-eslint/no-inferrable-types": 0,
         "@typescript-eslint/no-non-null-assertion": 1,
         "@typescript-eslint/no-unnecessary-type-assertion": 2,
-        "block-spacing": [
-          "warn",
-          "always"
-        ],
-        "curly": [
-          "warn",
-          "all"
-        ],
+        "block-spacing": ["warn", "always"],
+        "curly": ["warn", "all"],
         "eol-last": 2,
         "max-len": [
           "error",
@@ -70,10 +56,7 @@
             "tabWidth": 2
           }
         ],
-        "max-lines-per-function": [
-          "error",
-          40
-        ],
+        "max-lines-per-function": ["error", 40],
         "no-console": 0,
         "no-debugger": 0,
         "no-multiple-empty-lines": [
@@ -90,28 +73,19 @@
         "no-template-curly-in-string": 1,
         "no-underscore-dangle": 0,
         "no-unused-vars": 0,
-        "object-curly-spacing": [
-          "warn",
-          "always"
-        ],
+        "object-curly-spacing": ["warn", "always"],
         "spaced-comment": [
           "error",
           "always",
           {
-            "markers": [
-              "!",
-              "?",
-              "//",
-              "todo",
-              "*"
-            ]
+            "markers": ["!", "?", "//", "todo", "*"]
           }
         ],
         "@angular-eslint/directive-selector": [
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
+            "prefix": "agn",
             "style": "camelCase"
           }
         ],
@@ -119,41 +93,16 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "agn",
             "style": "kebab-case"
           }
         ]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "excludedFiles": [
-        "*inline-template-*.component.html"
-      ],
-      "rules": {
-        "prettier/prettier": [
-          "error",
-          {
-            "parser": "angular"
-          }
-        ]
-      }
-    },
-    {
-      "files": [
-        "*.ts"
-      ],
-      "rules": {
-        "@ngrx/avoid-combining-selectors": "off"
-      },
-      "extends": [
-        "plugin:@ngrx/all-requiring-type-checking"
-      ]
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "excludedFiles": ["*inline-template-*.component.html"]
     }
   ]
 }

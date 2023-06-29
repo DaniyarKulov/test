@@ -1,7 +1,7 @@
 import {
-  ChangeDetectionStrategy, Component, OnInit, ViewChild,
+  ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild,
 } from '@angular/core';
-import { tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -16,9 +16,8 @@ import { UserData } from '../../models/user-data.model';
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
   public users!: MatTableDataSource<UserData>;
-
   public displayedColumns: string[] = [
     'name',
     'age',
@@ -30,20 +29,22 @@ export class TableComponent implements OnInit {
     'favorite_fruit',
     'isActive',
   ];
-
   @ViewChild(MatPaginator) public paginator!: MatPaginator;
   @ViewChild(MatSort) public sort!: MatSort;
 
-  constructor(private usersHttpService: UsersHttpService, private usersFacadeService:UsersFacadeService) {
-  }
+  private subs = new Subscription();
+
+  constructor(private usersHttpService: UsersHttpService, private usersFacadeService:UsersFacadeService) {}
+
+
   public ngOnInit(): void {
-    this.usersHttpService.users.pipe(
+    this.subs.add(this.usersHttpService.users.pipe(
       tap((data) => this.usersFacadeService.addUsers(data)),
     ).subscribe((data) => {
       this.users = new MatTableDataSource(data);
       this.users.paginator = this.paginator;
       this.users.sort = this.sort;
-    });
+    }));
   }
 
 
@@ -53,6 +54,10 @@ export class TableComponent implements OnInit {
     if (this.users.paginator) {
       this.users.paginator.firstPage();
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }
 

@@ -18,9 +18,10 @@ import { UserData } from '../../models/user-data.model';
 })
 export class TableComponent implements OnInit, OnDestroy {
   public users!: MatTableDataSource<UserData>;
-  public displayedColumns: string[] = [
+  public displayedColumns = [
     'name',
     'age',
+    'picture',
     'company',
     'balance',
     'email',
@@ -29,13 +30,14 @@ export class TableComponent implements OnInit, OnDestroy {
     'favorite_fruit',
     'isActive',
   ];
+  public isLoadingResults = true;
+  public isLoading$ = this.usersFacadeService.isLoading$;
   @ViewChild(MatPaginator) public paginator!: MatPaginator;
   @ViewChild(MatSort) public sort!: MatSort;
-
   private subs = new Subscription();
 
-  constructor(private usersHttpService: UsersHttpService, private usersFacadeService:UsersFacadeService) {}
-
+  constructor(private usersHttpService: UsersHttpService, private usersFacadeService: UsersFacadeService) {
+  }
 
   public ngOnInit(): void {
     this.subs.add(this.usersHttpService.users.pipe(
@@ -48,7 +50,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
 
-  public applyFilter(event: Event):void {
+  public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.users.filter = filterValue.trim().toLowerCase();
     if (this.users.paginator) {

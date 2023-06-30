@@ -1,60 +1,80 @@
-<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
-</mat-form-field>
-  <table mat-table [dataSource]="users" matSort>
+<div class="container">
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput>
+  </mat-form-field>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let element">
-        <img [ngSrc]="element.picture" [alt]="element.id" width="32" height="32">
-        <p *ngIf="element.name">{{element.name.first}} {{element.name.last}}</p>
-      </td>
+  <ng-template #spinner>
+    <div class="spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+
+  <div class="content">
+    <ng-container *ngIf="false else spinner">
+      <table [dataSource]="users" class="table mat-elevation-z8" mat-table matSort>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+          <td *matCellDef="let element" mat-cell>
+            <p *ngIf="element.name">{{element.name.first}} {{element.name.last}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Age</th>
+          <td *matCellDef="let element" mat-cell>{{element.age}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="picture">
+          <th *matHeaderCellDef mat-header-cell>Picture</th>
+          <td *matCellDef="let element" mat-cell>
+            <img [alt]="element.id" [ngSrc]="element.picture" height="32" width="32"></td>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Company</th>
+          <td *matCellDef="let element" mat-cell>{{element.company}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="balance">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Balance</th>
+          <td *matCellDef="let element" mat-cell>{{element.balance}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Email</th>
+          <td *matCellDef="let element" mat-cell>{{element.email}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Address</th>
+          <td *matCellDef="let element" mat-cell>{{element.address}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tags">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Tags</th>
+          <td *matCellDef="let element" mat-cell>{{element.tags}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="favorite_fruit">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Favorite fruit</th>
+          <td *matCellDef="let element" mat-cell>{{element.favoriteFruit}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isActive">
+          <th *matHeaderCellDef mat-header-cell>Is active</th>
+          <td *matCellDef="let element" mat-cell>{{element.isActive}}</td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+        <tr *matNoDataRow class="mat-row">
+          <td class="table__not-found" colspan="4">No data matching the filter: "{{input.value}}"</td>
+        </tr>
+      </table>
     </ng-container>
+  </div>
 
-    <ng-container matColumnDef="age">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header >Age</th>
-      <td mat-cell *matCellDef="let element">{{element.age}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="company">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header >Company</th>
-      <td mat-cell *matCellDef="let element">{{element.company}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="balance">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header >Balance</th>
-      <td mat-cell *matCellDef="let element">{{element.balance}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header >Email</th>
-      <td mat-cell *matCellDef="let element">{{element.email}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="address">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
-      <td mat-cell *matCellDef="let element">{{element.address}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="tags">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tags</th>
-      <td mat-cell *matCellDef="let element">{{element.tags}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="favorite_fruit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Favorite fruit</th>
-      <td mat-cell *matCellDef="let element">{{element.favoriteFruit}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="isActive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is active</th>
-      <td mat-cell *matCellDef="let element">{{element.isActive}}</td>
-    </ng-container>
- 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons ></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>

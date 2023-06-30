@@ -5,16 +5,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
-    CdkTableModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
   ],
   exports: [
     CdkTableModule,
@@ -22,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSortModule,
   ],
 })
-export class MaterialModule { }
+export class MaterialModule {
+}

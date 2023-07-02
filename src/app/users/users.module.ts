@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TableComponent } from './components/table/table.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { Features } from './users-store/enums/features';
@@ -22,8 +20,6 @@ import { usersReducer } from './users-store/users.reducer';
     NgOptimizedImage,
     StoreModule.forFeature(Features.Users, usersReducer),
     EffectsModule.forFeature([UsersEffects]),
-    MatFormFieldModule,
-    MatProgressSpinnerModule,
   ],
   exports: [UsersComponent],
 })

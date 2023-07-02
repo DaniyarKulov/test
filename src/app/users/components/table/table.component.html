@@ -4,66 +4,107 @@
     <input #input (keyup)="applyFilter($event)" matInput>
   </mat-form-field>
 
-  <ng-template #spinner>
-    <div class="spinner">
-      <mat-spinner></mat-spinner>
-    </div>
-  </ng-template>
+  <div class="content" >
+      <table [dataSource]="users" 
+      class="table" 
+      mat-table 
+      matSort 
+      matSortDisableClear
+      (matSortChange)="sortUsers($event)"
+      >
+<ng-template #hide><div></div></ng-template>
 
-  <div class="content">
-    <ng-container *ngIf="false else spinner">
-      <table [dataSource]="users" class="table mat-elevation-z8" mat-table matSort>
-        <ng-container matColumnDef="name">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
-          <td *matCellDef="let element" mat-cell>
-            <p *ngIf="element.name">{{element.name.first}} {{element.name.last}}</p>
-          </td>
+        <ng-container matColumnDef="name" sticky>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__name" >Name</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              <p *ngIf="indexes.includes(i) && element.name else hide" >{{element.name.first}} {{element.name.last}}</p>
+            </ng-container>  
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="age">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Age</th>
-          <td *matCellDef="let element" mat-cell>{{element.age}}</td>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__age">Age</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+            {{element.age}}
+          </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="picture">
-          <th *matHeaderCellDef mat-header-cell>Picture</th>
-          <td *matCellDef="let element" mat-cell>
-            <img [alt]="element.id" [ngSrc]="element.picture" height="32" width="32"></td>
+          <th *matHeaderCellDef mat-header-cell class="table__picture">Picture</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              <img [alt]="element.id" [ngSrc]="element.picture" height="32" width="32"> 
+            </ng-container>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="company">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Company</th>
-          <td *matCellDef="let element" mat-cell>{{element.company}}</td>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__company">Company</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              {{element.company}}
+            </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="balance">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Balance</th>
-          <td *matCellDef="let element" mat-cell>{{element.balance}}</td>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__balance">Balance</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              {{element.balance}}
+            </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="email">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Email</th>
-          <td *matCellDef="let element" mat-cell>{{element.email}}</td>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__email">Email</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              {{element.email}}
+            </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="address">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Address</th>
-          <td *matCellDef="let element" mat-cell>{{element.address}}</td>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__address">Address</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              {{element.address}}
+            </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="tags">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Tags</th>
-          <td *matCellDef="let element" mat-cell>{{element.tags}}</td>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__tags">Tags</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              {{element.tags}}
+            </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="favorite_fruit">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Favorite fruit</th>
-          <td *matCellDef="let element" mat-cell>{{element.favoriteFruit}}</td>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="table__fruits">Favorite fruit</th>
+          <td *matCellDef="let element; let i = index" mat-cell>
+            <ng-container  *ngIf="indexes.includes(i) else hide">
+              {{element.favoriteFruit}}
+            </ng-container>
+          </td>
         </ng-container>
 
+        <ng-template #arrow_up><mat-icon>keyboard_arrow_up</mat-icon></ng-template>
         <ng-container matColumnDef="isActive">
           <th *matHeaderCellDef mat-header-cell>Is active</th>
-          <td *matCellDef="let element" mat-cell>{{element.isActive}}</td>
+          <td *matCellDef="let element; let i = index" mat-cell class="table__visible">
+            <div (click)="onVision(i);" >
+              <ng-container *ngIf="indexes.includes(i) else arrow_up">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+              </ng-container>
+            </div>
+          </td>
         </ng-container>
 
         <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
@@ -73,7 +114,6 @@
           <td class="table__not-found" colspan="4">No data matching the filter: "{{input.value}}"</td>
         </tr>
       </table>
-    </ng-container>
   </div>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

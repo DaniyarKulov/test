@@ -1,7 +1,6 @@
 :host {
   display: block;
   padding: 20px;
-
 }
 
 .container {
@@ -11,6 +10,7 @@
 }
 
 .content {
+  overflow: auto;
   flex: 1 0 auto;
 }
 
@@ -20,4 +20,26 @@
   justify-content: center;
   min-height: 70vh;
 }
-
+.table {
+  &__name {
+    min-width: 100px;
+  }
+  &__company {
+    min-width: 100px;
+  }
+  &__balance {
+    min-width: 100px;
+  }
+  &__email {
+    min-width: 250px;
+  }
+  &__address {
+    min-width: 200px;
+  }
+  &__tags {
+    min-width: 300px;
+  }
+  &__visible {
+    cursor: pointer;
+  }
+}

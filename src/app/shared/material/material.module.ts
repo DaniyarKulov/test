@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatSortModule,
     MatIconModule,
+    MatCheckboxModule,
   ],
 })
 export class MaterialModule {

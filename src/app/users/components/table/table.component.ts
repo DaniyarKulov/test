@@ -5,9 +5,11 @@ import { Subscription, tap } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { SortUsersService } from '../../services/sort-users.service';
 import { UsersFacadeService } from '../../services/users-facade.service';
 import { UserData } from '../../models/user-data.model';
+import { localeStringComporator } from '../../utils/locale-string-comporator.const';
 
 @Component({
   selector: 'agn-table',
@@ -17,7 +19,7 @@ import { UserData } from '../../models/user-data.model';
 })
 export class TableComponent implements OnInit, OnDestroy {
   public users!: MatTableDataSource<UserData>;
-  public isVision = true;
+  public isVision = false;
   public currentIndex: number | null = null;
   public indexes:number[] = [];
   public displayedColumns = [
@@ -32,6 +34,19 @@ export class TableComponent implements OnInit, OnDestroy {
     'favorite_fruit',
     'isActive',
   ];
+  public displayedCheckbox = [
+    'name',
+    'age',
+    'picture',
+    'company',
+    'balance',
+    'email',
+    'address',
+    'tags',
+    'favorite_fruit',
+    'isActive',
+  ];
+  public collumName = '';
   @ViewChild(MatPaginator) public paginator!: MatPaginator;
   @ViewChild(MatSort) public sort!: MatSort;
   private subs = new Subscription();
@@ -72,15 +87,27 @@ export class TableComponent implements OnInit, OnDestroy {
     this.usersSortService.sortUsers(sortCriteria);
   }
 
-  public onVision(index:number):void {
-    this.currentIndex = index;
-    const currentIndex = this.indexes.indexOf(index);
-    if (currentIndex > -1) {
-      this.indexes.splice(currentIndex, 1);
-    } else {
-      this.indexes.push(index);
-    }
+  // public onVision(index:number):void {
+  //   this.currentIndex = index;
+  //   const currentIndex = this.indexes.indexOf(index);
+  //   if (currentIndex > -1) {
+  //     this.indexes.splice(currentIndex, 1);
+  //   } else {
+  //     this.indexes.push(index);
+  //   }
+  //   this.isVision = !this.isVision;
+  // }
+
+  public onVision():void {
     this.isVision = !this.isVision;
+  }
+
+  public checked(columnName: string): void {
+    this.collumName = columnName;
+  }
+
+  public localComparator(string:string):boolean {
+    return !!localeStringComporator(this.collumName, string);
   }
 }
 

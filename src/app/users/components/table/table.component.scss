@@ -21,6 +21,7 @@
   min-height: 70vh;
 }
 .table {
+  position: relative;
   &__name {
     min-width: 100px;
   }
@@ -42,4 +43,20 @@
   &__visible {
     cursor: pointer;
   }
+  &__section {
+    position: absolute;
+    right: 40px;
+    top: 0px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    overflow-y: scroll;
+    max-height: 300px;
+  }
+  &__add {
+    position: relative;
+  }
+}
+.vision {
+  display: none;
 }

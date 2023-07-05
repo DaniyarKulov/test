@@ -20,29 +20,38 @@
   justify-content: center;
   min-height: 70vh;
 }
+
 .table {
   position: relative;
+
   &__name {
     min-width: 100px;
   }
+
   &__company {
     min-width: 100px;
   }
+
   &__balance {
     min-width: 100px;
   }
+
   &__email {
     min-width: 250px;
   }
+
   &__address {
     min-width: 200px;
   }
+
   &__tags {
     min-width: 300px;
   }
+
   &__visible {
     cursor: pointer;
   }
+
   &__section {
     position: absolute;
     right: 40px;
@@ -53,10 +62,12 @@
     overflow-y: scroll;
     max-height: 300px;
   }
+
   &__add {
     position: relative;
   }
 }
+
 .vision {
-  display: none;
+  visibility: hidden;
 }

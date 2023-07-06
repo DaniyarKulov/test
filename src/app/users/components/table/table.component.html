@@ -1,7 +1,7 @@
 <div class="container">
   <mat-form-field>
     <mat-label>Search</mat-label>
-    <input #input (keyup)="applyFilter($event)" matInput>
+    <input #input [formControl]="filterControl" matInput>
   </mat-form-field>
 
   <div class="content">
@@ -107,11 +107,13 @@
       <ng-container matColumnDef="isActive">
         <th *matHeaderCellDef mat-header-cell>
           <ng-container>
-            <mat-icon (click)="onVision()">add</mat-icon>
-            <section *ngIf="isVision" class="table__section">
+            <button (click)="onCheckboxVisibility()">
+              <mat-icon >add</mat-icon>
+            </button>
+            <section *ngIf="isCheckboxVisible" class="table__section">
               <ng-container *ngFor="let option of checkboxName">
                 <p>
-                  <mat-checkbox (change)="checked(option)"
+                  <mat-checkbox (change)="checkedColumnsName(option)"
                                 [checked]="isCheckedColumnsName[option]">{{option}}</mat-checkbox>
                 </p>
               </ng-container>

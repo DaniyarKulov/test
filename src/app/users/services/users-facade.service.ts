@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getUsers } from '../users-store/users.action';
-import { UserData } from '../models/user-data.model';
+import { Sort } from '@angular/material/sort';
+import { getLoading, getSortCriteria } from '../users-store/users.action';
 import { selectLoading, selectUsers } from '../users-store/users.selectors';
 
 @Injectable({
@@ -14,7 +14,11 @@ export class UsersFacadeService {
   constructor(private store$: Store) {
   }
 
-  public addUsers(users: UserData[]): void {
-    this.store$.dispatch(getUsers({ users }));
+  public getLoading(): void {
+    this.store$.dispatch(getLoading());
+  }
+
+  public sortCriteria(sortCriteria:Sort):void {
+    this.store$.dispatch(getSortCriteria({ sortCriteria }));
   }
 }

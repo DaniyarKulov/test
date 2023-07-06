@@ -4,13 +4,13 @@ import {
   catchError, map, of, switchMap,
 } from 'rxjs';
 import { UsersHttpService } from '../services/users-http.service';
-import { getUsers, getUsersFailure, getUsersSuccess } from './users.action';
+import { getLoading, getUsersFailure, getUsersSuccess } from './users.action';
 
 
 @Injectable()
 export class UsersEffects {
   public getUsers$ = createEffect(() => this.actions$.pipe(
-    ofType(getUsers),
+    ofType(getLoading),
     switchMap(() => this.usersHttpService.users.pipe(
       map((users) => getUsersSuccess({ users })),
       catchError(({ message }) => of(getUsersFailure(message))),

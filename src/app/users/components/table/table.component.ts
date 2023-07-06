@@ -1,14 +1,20 @@
 import {
   ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild,
 } from '@angular/core';
-import { Subscription, tap } from 'rxjs';
+import {
+  Subscription, debounceTime, tap,
+} from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import { FormControl } from '@angular/forms';
+import { CollumnsName } from '../../models/collumnsName.type';
 import { SortUsersService } from '../../services/sort-users.service';
 import { UsersFacadeService } from '../../services/users-facade.service';
 import { UserData } from '../../models/user-data.model';
-import { CollumnsName } from '../../models/collumnsName.type';
+import { checkboxName } from '../../constans/checkbox-name.const';
+import { columnsName } from '../../constans/collumns-name.const';
+import { isCheckedColumnsName } from '../../constans/is-checked-collumns-name.const';
 
 @Component({
   selector: 'agn-table',
@@ -18,44 +24,12 @@ import { CollumnsName } from '../../models/collumnsName.type';
 })
 export class TableComponent implements OnInit, OnDestroy {
   public users!: MatTableDataSource<UserData>;
-  public isVision = false;
-  public columnsName: CollumnsName[] = [
-    'name',
-    'age',
-    'picture',
-    'company',
-    'balance',
-    'email',
-    'address',
-    'tags',
-    'favorite_fruit',
-    'isActive',
-  ];
-  public checkboxName: CollumnsName[] = [
-    'name',
-    'age',
-    'picture',
-    'company',
-    'balance',
-    'email',
-    'address',
-    'tags',
-    'favorite_fruit',
-  ];
-
-  public isCheckedColumnsName = {
-    name: false,
-    age: false,
-    picture: false,
-    company: false,
-    balance: false,
-    email: false,
-    address: false,
-    tags: false,
-    favorite_fruit: false,
-    isActive: false,
-  };
+  public isCheckboxVisible = false;
+  public columnsName = columnsName;
+  public checkboxName = checkboxName;
+  public isCheckedColumnsName = isCheckedColumnsName;
   public collumName = '';
+  public filterControl: FormControl = new FormControl('');
   @ViewChild(MatPaginator) public paginator!: MatPaginator;
   @ViewChild(MatSort) public sort!: MatSort;
   private subs = new Subscription();
@@ -68,40 +42,42 @@ export class TableComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subs.add(this.usersSortService.sortedUsers$.pipe(
-      tap((data) => {
-        this.usersFacadeService.addUsers(data);
+      tap(() => {
+        this.usersFacadeService.getLoading();
       }),
     ).subscribe((data) => {
       this.users = new MatTableDataSource(data);
       this.users.paginator = this.paginator;
       this.users.sort = this.sort;
     }));
+    this.filterControl.valueChanges.pipe(
+      debounceTime(300),
+      tap((data) => data.trim().toLowerCase),
+    ).subscribe((value) => {
+      this.users.filter = value;
+      if (this.users.paginator) {
+        this.users.paginator.firstPage();
+      }
+    });
   }
 
-
-  public applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.users.filter = filterValue.trim().toLowerCase();
-    if (this.users.paginator) {
-      this.users.paginator.firstPage();
-    }
-  }
 
   public ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
 
   public sortUsers(sortCriteria: Sort): void {
-    this.usersSortService.sortUsers(sortCriteria);
+    this.usersFacadeService.sortCriteria(sortCriteria);
+    // this.usersSortService.sortUsers(sortCriteria);
   }
 
-  public onVision(): void {
-    this.isVision = !this.isVision;
+  public onCheckboxVisibility(): void {
+    this.isCheckboxVisible = !this.isCheckboxVisible;
   }
 
-  public checked(columnName: CollumnsName): void {
-    this.collumName = columnName;
+  public checkedColumnsName(columnName: CollumnsName): void {
     this.isCheckedColumnsName[columnName] = !this.isCheckedColumnsName[columnName];
+    this.collumName = columnName;
   }
 }
 
